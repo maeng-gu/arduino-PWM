@@ -1,13 +1,4 @@
-[microsoft.github.io](microsoft.github.io)
+[아두이노 함수 안쓰고 아두이노 코딩하기]
 ===================
 
-As Microsoft's open source presence and volume of released source code up on GitHub has
-increased, we've reimagined the portal and index for our repos.
-
-Today you can find, filter and review all sorts of open source up at [opensource.microsoft.com](https://opensource.microsoft.com).
-
-At this time the site also continues to hold the official Microsoft Open Source Code of Conduct policy and
-FAQ.
-
-Feel free to email [opensource@microsoft.com](mailto:opensource@microsoft.com) if you have any questions about this site or Microsoft GitHub
-organizations in general.
+2019년 대구소프트웨어 고등학교 실시간 운영체제 수업 중 아두이노를 이용하여 전기전자와 관련된 프로그래밍을 학습한 파일입니다.
