@@ -7,6 +7,16 @@ void setup() {
   //reset 5v -> L이면 초기화
   //output enable gnd -> L일때 값을 output으로 보냄
 
+  Serial.begin(9600);
+  pinMode(2, OUTPUT);
+  pinMode(3,  OUTPUT);
+  pinMode(4,  OUTPUT);
+  pinMode(5,  OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+
 
 }
 
@@ -25,6 +35,8 @@ char binary[10][8] ={
   {0x00, 0x38, 0x44, 0x44, 0x38, 0x44, 0x44, 0x38},
   {0x00, 0x38, 0x44, 0x44, 0x3c, 0x04, 0x44, 0x38}
 };
+int number = 0;
+int ch, i;
 
 
 void loop() {
@@ -35,34 +47,48 @@ void loop() {
   digitalWrite(12, LOW); //latch
   ///////////////////////////////////
 
-  ////LED ON
-  for (int i = 0 ; i < 8 ; i++)
+    for(int k = 0 ; k < 65 ; k++)
   {
-    if (binary[count][i] & (0x80 >> i))
-    {
-      digitalWrite(10, HIGH);
-    }
-    else
-    {
-      digitalWrite(10, LOW);
-    }
+  for(int j = 0 ; j < 8 ; j++)
+  {
+    
+      for(int i = 2 ; i < 10 ; i++)
+       {
+         digitalWrite(i, 0);
+        }
+        
+        for(i = 0 ; i < 8 ; i++)
+         {
+              if (binary[number][j] & (0x01 << i))
+             {
+                 digitalWrite(10, LOW);
+              }
+             else
+               {
+                   digitalWrite(10, HIGH);
+                 }
+
+              digitalWrite(11, HIGH); //clock
+              digitalWrite(11, LOW); //clock
+          }
  
-    digitalWrite(11, HIGH); //clock
-    digitalWrite(11, LOW); //clock
+           //latch high, low
+            digitalWrite(12, HIGH);
+             digitalWrite(12, LOW);
+             
+           digitalWrite (j+2, 1);          
+         delay(2);
+         
+     }
+
   }
 
-  //latch high, low
-
-  digitalWrite(12, HIGH);
-  digitalWrite(12, LOW);
-
-  delay(1000);
-
-  count++;
-  if (count > 1)
-  {
-    count = 0;
-  }
+number++;
+if(number > 9)
+{
+  number = 0;
+}
+ // delay(1000);
 
 
 }

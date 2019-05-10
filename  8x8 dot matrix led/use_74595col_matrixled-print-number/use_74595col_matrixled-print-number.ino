@@ -1,5 +1,12 @@
+
 void setup() {
   // put your setup code here, to run once:
+  pinMode(10, OUTPUT); //data
+  pinMode(11, OUTPUT); //shift clock
+  pinMode(12, OUTPUT); //latch
+  //reset 5v -> L이면 초기화
+  //output enable gnd -> L일때 값을 output으로 보냄
+
   Serial.begin(9600);
   pinMode(2, OUTPUT);
   pinMode(3,  OUTPUT);
@@ -9,17 +16,13 @@ void setup() {
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
   pinMode(9, OUTPUT);
-  
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT);
-  pinMode(14, OUTPUT);
-  pinMode(15, OUTPUT);
-  pinMode(16, OUTPUT);
-  pinMode(17, OUTPUT);
+
+
 }
 
+int num = 0;
+int data[2] = {0x01, 0x02};
+int count = 0;
 char binary[10][8] ={
   {0x00, 0x38, 0x44, 0x4c, 0x54, 0x64, 0x44, 0x38},
   {0x00, 0x10, 0x30, 0x50, 0x10, 0x10, 0x10, 0x7c},
@@ -35,38 +38,57 @@ char binary[10][8] ={
 int number = 0;
 int ch, i;
 
-void loop() {
 
-  for(int k = 0 ; k < 65 ; k++)
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  digitalWrite(10, LOW); //data
+  digitalWrite(11, LOW); //clock
+  digitalWrite(12, LOW); //latch
+  ///////////////////////////////////
+
+    for(int k = 0 ; k < 65 ; k++)
   {
   for(int j = 0 ; j < 8 ; j++)
   {
+    
       for(int i = 2 ; i < 10 ; i++)
        {
          digitalWrite(i, 0);
         }
+        
         for(i = 0 ; i < 8 ; i++)
          {
-             ch = i + 10;
-             if(binary[number][j] & (0x80 >> i))
-              {
-               digitalWrite (ch, 0);
+              if (binary[number][j] & (0x01 << i))
+             {
+                 digitalWrite(10, LOW);
               }
-                else 
-              {
-                digitalWrite(ch, 1);
-              }
-           }
-         digitalWrite (j+2, 1);
+             else
+               {
+                   digitalWrite(10, HIGH);
+                 }
+
+              digitalWrite(11, HIGH); //clock
+              digitalWrite(11, LOW); //clock
+          }
+ 
+           //latch high, low
+            digitalWrite(12, HIGH);
+             digitalWrite(12, LOW);
+             
+           digitalWrite (j+2, 1);          
          delay(2);
          
      }
 
   }
 
-     number++;
-     if(number == 10)
-     {
-      number = 0;
-     }
+number++;
+if(number > 9)
+{
+  number = 0;
+}
+ // delay(1000);
+
+
 }
