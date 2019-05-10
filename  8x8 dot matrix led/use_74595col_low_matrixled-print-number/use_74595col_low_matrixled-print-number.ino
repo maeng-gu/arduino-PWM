@@ -54,19 +54,23 @@ void loop() {
     
       for(int i = 2 ; i < 10 ; i++)
        {
-         digitalWrite(i, 0);
+         digitalWrite(10, HIGH);
+         
+         digitalWrite(11, HIGH); //clock
+         digitalWrite(11, LOW); //clock
         }
         
         for(i = 0 ; i < 8 ; i++)
          {
-              if (binary[number][j] & (0x01 << i))
-             {
-                 digitalWrite(10, LOW);
-              }
-             else
-               {
-                   digitalWrite(10, HIGH);
-                 }
+          digitalWrite(11, LOW);
+//              if (binary[number][j] & (0x01 << i))
+//             {
+//                 digitalWrite(10, LOW);
+//              }
+//             else
+//               {
+//                   digitalWrite(10, HIGH);
+//                 }
 
               digitalWrite(11, HIGH); //clock
               digitalWrite(11, LOW); //clock
@@ -76,7 +80,7 @@ void loop() {
             digitalWrite(12, HIGH);
              digitalWrite(12, LOW);
              
-           digitalWrite (j+2, 1);          
+         //  digitalWrite (j+2, 1);          
          delay(2);
          
      }
