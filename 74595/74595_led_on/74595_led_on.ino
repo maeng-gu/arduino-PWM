@@ -17,6 +17,8 @@ void loop() {
   digitalWrite(11, LOW); //clock
   digitalWrite(12, LOW); //latch
 ///////////////////////////////////
+
+////LED ON
 //data 8bit 1
   digitalWrite(10, HIGH); //data
   digitalWrite(11, HIGH); //clock
