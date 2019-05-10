@@ -108,12 +108,7 @@ void loop() {
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
-    //latch high, low
-
-  digitalWrite(12, HIGH);
-  digitalWrite(12, LOW);
-
-  delay(1000);
+  
   
   
 
