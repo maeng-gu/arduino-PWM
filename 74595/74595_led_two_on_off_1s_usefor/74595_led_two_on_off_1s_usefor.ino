@@ -10,6 +10,8 @@ void setup() {
 
 }
 
+int data = 0;
+
 void loop() {
   // put your main code here, to run repeatedly:
   
@@ -19,38 +21,43 @@ void loop() {
 ///////////////////////////////////
 
 ////LED ON
+
+for(int i = 0 ; i < 8 ; i++)
+{
+  digitalWrite(1
+}
 //data 8bit 1
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
   //data 8bit 2
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
   
   //data 8bit 3
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
     //data 8bit 4
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
     //data 8bit 5
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
     //data 8bit 6
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
     //data 8bit 7
-  digitalWrite(10, HIGH); //data
+  digitalWrite(10, LOW); //data
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
@@ -108,14 +115,15 @@ void loop() {
   digitalWrite(11, HIGH); //clock
   digitalWrite(11, LOW); //clock
 
-  
-
-  //latch high, low
+    //latch high, low
 
   digitalWrite(12, HIGH);
   digitalWrite(12, LOW);
   
    delay(1000);
 
+  
+  
+  
 
 }
