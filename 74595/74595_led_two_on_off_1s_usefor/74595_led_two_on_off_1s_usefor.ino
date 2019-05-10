@@ -6,65 +6,37 @@ void setup() {
   pinMode(12, OUTPUT); //latch
   //reset 5v -> L이면 초기화
   //output enable gnd -> L일때 값을 output으로 보냄
-  
+
 
 }
 
-int data = 0;
+int num = 0;
+int data[2] = {0x01, 0x02};
+int count = 0;
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+
   digitalWrite(10, LOW); //data
   digitalWrite(11, LOW); //clock
   digitalWrite(12, LOW); //latch
-///////////////////////////////////
+  ///////////////////////////////////
 
-////LED ON
+  ////LED ON
+  for (int i = 0 ; i < 8 ; i++)
+  {
+    if (data[count] & (0x80 >> i))
+    {
+      digitalWrite(10, HIGH);
+    }
+    else
+    {
+      digitalWrite(10, LOW);
+    }
 
-for(int i = 0 ; i < 8 ; i++)
-{
-  digitalWrite(1
-}
-//data 8bit 1
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-  //data 8bit 2
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-  
-  //data 8bit 3
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 4
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 5
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 6
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 7
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 8
-  digitalWrite(10, HIGH); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
+    digitalWrite(11, HIGH); //clock
+    digitalWrite(11, LOW); //clock
+  }
 
   //latch high, low
 
@@ -72,58 +44,12 @@ for(int i = 0 ; i < 8 ; i++)
   digitalWrite(12, LOW);
 
   delay(1000);
-  
-  //// LED OFF
 
-  //data 8bit 1
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
+  count++;
+  if (count > 1)
+  {
+    count = 0;
+  }
 
-    //data 8bit 2
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 3
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 4
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 5
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 6
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 7
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //data 8bit 8
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, HIGH); //clock
-  digitalWrite(11, LOW); //clock
-
-    //latch high, low
-
-  digitalWrite(12, HIGH);
-  digitalWrite(12, LOW);
-  
-   delay(1000);
-
-  
-  
-  
 
 }
