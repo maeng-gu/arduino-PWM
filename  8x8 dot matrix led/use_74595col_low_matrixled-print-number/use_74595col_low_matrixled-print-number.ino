@@ -16,7 +16,11 @@ void setup() {
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
   pinMode(9, OUTPUT);
-
+  
+  digitalWrite(10, LOW); //data
+  digitalWrite(11, LOW); //clock
+  digitalWrite(12, LOW); //latch
+  ///////////////////////////////////
 
 }
 
@@ -37,40 +41,54 @@ char binary[10][8] ={
 };
 int number = 0;
 int ch, i;
-
+int led[16] = {0, };
+int a;
+int cheak = 0;
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-  digitalWrite(10, LOW); //data
-  digitalWrite(11, LOW); //clock
-  digitalWrite(12, LOW); //latch
-  ///////////////////////////////////
 
-    for(int k = 0 ; k < 65 ; k++)
-  {
+
+for(int k = 0 ; k < 65 ; k++)
+{
   for(int j = 0 ; j < 8 ; j++)
   {
-    
-      for(int i = 2 ; i < 10 ; i++)
+    //전체 끄기
+      for(int i = 0 ; i < 16 ; i++)
        {
-         digitalWrite(10, HIGH);
+         digitalWrite(10, LOW);
+         led[i] = 0;
          
+         digitalWrite(11, HIGH); //clock
+         digitalWrite(11, LOW); //clock
+        }
+         
+           //latch high, low
+            digitalWrite(12, HIGH);
+             digitalWrite(12, LOW);
+
+///////////////////
+        for(int i = 0 ; i < 8 ; i++)
+       {
+         digitalWrite(10, LOW);
+                  
          digitalWrite(11, HIGH); //clock
          digitalWrite(11, LOW); //clock
         }
         
         for(i = 0 ; i < 8 ; i++)
-         {
-          digitalWrite(11, LOW);
-//              if (binary[number][j] & (0x01 << i))
-//             {
-//                 digitalWrite(10, LOW);
-//              }
-//             else
-//               {
-//                   digitalWrite(10, HIGH);
-//                 }
+         {          
+              if (binary[number][7-j] & (0x01 << i))
+             {
+                 digitalWrite(10, LOW);
+                 led[i+8] = 0;
+              }
+             else
+               {
+                   digitalWrite(10, HIGH);
+                   led[i+8] = 1;
+                 }
 
               digitalWrite(11, HIGH); //clock
               digitalWrite(11, LOW); //clock
@@ -79,20 +97,39 @@ void loop() {
            //latch high, low
             digitalWrite(12, HIGH);
              digitalWrite(12, LOW);
-             
-         //  digitalWrite (j+2, 1);          
-         delay(2);
-         
-     }
 
-  }
+             led[j] = 1;
+
+             for(i = 0 ; i < 16 ; i++)
+             {
+                digitalWrite(10, led[i]);
+
+              digitalWrite(11, HIGH); //clock
+              digitalWrite(11, LOW); //clock
+             }
+
+                        //latch high, low
+            digitalWrite(12, HIGH);
+             digitalWrite(12, LOW);
+
+             
+
+         //  digitalWrite (j+2, 1);          
+         delay(1);
+          cheak++;
+     if(cheak >8)
+     {
+      cheak = 0;
+     }
+     }
+    
+
+}
 
 number++;
 if(number > 9)
 {
   number = 0;
 }
- // delay(1000);
-
 
 }
