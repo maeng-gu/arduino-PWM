@@ -24,9 +24,6 @@ void setup() {
 
 }
 
-int num = 0;
-int data[2] = {0x01, 0x02};
-int count = 0;
 char binary[10][8] ={
   {0x00, 0x38, 0x44, 0x4c, 0x54, 0x64, 0x44, 0x38},
   {0x00, 0x10, 0x30, 0x50, 0x10, 0x10, 0x10, 0x7c},
@@ -40,21 +37,16 @@ char binary[10][8] ={
   {0x00, 0x38, 0x44, 0x44, 0x3c, 0x04, 0x44, 0x38}
 };
 int number = 0;
-int ch, i;
 int led[16] = {0, };
-int a;
-int cheak = 0;
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
-
-for(int k = 0 ; k < 65 ; k++)
+for(int timer = 0 ; timer < 65 ; timer++) //1s
 {
-  for(int j = 0 ; j < 8 ; j++)
+  
+  for(int j = 0 ; j < 8 ; j++) //matrix line
   {
-    //전체 끄기
+    
+    //all led off
       for(int i = 0 ; i < 16 ; i++)
        {
          digitalWrite(10, LOW);
@@ -64,20 +56,21 @@ for(int k = 0 ; k < 65 ; k++)
          digitalWrite(11, LOW); //clock
         }
          
-           //latch high, low
-            digitalWrite(12, HIGH);
-             digitalWrite(12, LOW);
+      //latch high, low
+       digitalWrite(12, HIGH);
+       digitalWrite(12, LOW);
 
-///////////////////
-        for(int i = 0 ; i < 8 ; i++)
+       //matrix row all low
+       for(int i = 0 ; i < 8 ; i++)
        {
          digitalWrite(10, LOW);
                   
          digitalWrite(11, HIGH); //clock
          digitalWrite(11, LOW); //clock
         }
-        
-        for(i = 0 ; i < 8 ; i++)
+
+        //matrix col number_8bit
+        for(int i = 0 ; i < 8 ; i++)
          {          
               if (binary[number][7-j] & (0x01 << i))
              {
@@ -93,14 +86,17 @@ for(int k = 0 ; k < 65 ; k++)
               digitalWrite(11, HIGH); //clock
               digitalWrite(11, LOW); //clock
           }
+          
  
            //latch high, low
             digitalWrite(12, HIGH);
-             digitalWrite(12, LOW);
+            digitalWrite(12, LOW);
 
+            //matrix on_line number
              led[j] = 1;
 
-             for(i = 0 ; i < 16 ; i++)
+           //matrix on 
+             for(int i = 0 ; i < 16 ; i++)
              {
                 digitalWrite(10, led[i]);
 
@@ -108,24 +104,17 @@ for(int k = 0 ; k < 65 ; k++)
               digitalWrite(11, LOW); //clock
              }
 
-                        //latch high, low
+            //latch high, low
             digitalWrite(12, HIGH);
-             digitalWrite(12, LOW);
+            digitalWrite(12, LOW);
 
-             
-
-         //  digitalWrite (j+2, 1);          
-         delay(1);
-          cheak++;
-     if(cheak >8)
-     {
-      cheak = 0;
-     }
+            delay(1);
      }
     
 
 }
 
+//count number
 number++;
 if(number > 9)
 {
