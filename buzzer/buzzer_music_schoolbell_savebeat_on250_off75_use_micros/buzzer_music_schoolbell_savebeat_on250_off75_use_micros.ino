@@ -20,6 +20,8 @@ unsigned long previousMillis1 = 0; //timer
 
 int toggle;
 int music[24] = {g, g, a,a,g,g,e,g,g,e,e,d, g,g, f,f,g,g,e, g,e,d,e,c};
+int beat[24] = {325,325,325,325,325,325,500,325,325,325,325,500, 325,325,325,325,325,325,500,325,325,325,325,500};
+
 int flag = 1;
 
 
@@ -53,7 +55,7 @@ void loop() {
   }
 
  
-  if(currentMillis - previousMillis > 325) //325ms마다 음계변경 //4분음표
+  if(currentMillis - previousMillis > beat[ch]) //저장된 박자마다 음계변경 
   {
        previousMillis = currentMillis; // 마지막 상태 변화
        previousMillis1 = currentMillis; // 쉬는 부분 마지막 상태 변화
@@ -65,10 +67,10 @@ void loop() {
           ch = 0;
         }
         
-        flag = true;//on
+        flag = true;
   }
 
-   if(currentMillis - previousMillis1 > 325-75) //75ms 쉬기
+   if(currentMillis - previousMillis1 > beat[ch]-75) //75ms 쉬기
   {
        previousMillis1 = currentMillis; // 마지막 상태 변화
        flag = false; //off

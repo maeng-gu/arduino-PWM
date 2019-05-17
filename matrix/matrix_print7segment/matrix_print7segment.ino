@@ -90,19 +90,6 @@ void loop() {
        if(ch ==10)
         ch = 6;
   }
-  
-//        digitalWrite(14, 1);
-//        digitalWrite(19, 1);
-//
-//        digitalWrite(10,1);
-//        digitalWrite(11,1);
-//        digitalWrite(12,1);
-//        digitalWrite(13,1);
-//        digitalWrite(15,1);
-//        digitalWrite(16,1);
-//        digitalWrite(17,1);
-//        digitalWrite(18,1);
-
         
   
 
