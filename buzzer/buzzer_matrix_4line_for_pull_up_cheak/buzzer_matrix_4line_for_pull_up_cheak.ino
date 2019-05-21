@@ -77,7 +77,7 @@ void loop() {
               //Serial.println("HIGH" + String(i-2) +  String(count_col - 6));
               flag[i-2] [count_col - 6] = 0;
               flag2 = 1;
-              play = ((i-2)*4)+(col - 6);
+              play = ((i-2)*4)+(count_col - 6);
           }
         }
             
@@ -97,7 +97,7 @@ void loop() {
        
         unsigned long currentMicros = micros(); // 현재까지의 시간
         
-        if(currentMicros - previousMicros > hz[play])
+        if(currentMicros - previousMicros > hz4[play])
         {
              previousMicros = currentMicros; // 마지막 상태 변화 시간 저장
 
