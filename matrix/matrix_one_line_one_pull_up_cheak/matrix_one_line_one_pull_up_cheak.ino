@@ -35,7 +35,7 @@ void loop() {
     digitalWrite(9, 1);
     
     //one line col on
-    digitalWrite(count_col, 0); //첫번째 줄 값만 받아옴
+    digitalWrite(count_col, 0); //1~4 col 값 순차적으로 받기
 
     //get one pin 2
     getrow = digitalRead(2);
