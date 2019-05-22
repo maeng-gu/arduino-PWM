@@ -17,6 +17,8 @@ void setup() {
 }
 
 int getrow;
+int count_col = 6;
+int flag[4] = {1, 1, 1, 1};
 unsigned long per;
 
 
@@ -26,21 +28,45 @@ void loop() {
   {
     per = cur;
 
-    digitalWrite(6, 0);
-
-    getrow = digitalRead(2);
+  //all col h
+    digitalWrite(6, 1);
+    digitalWrite(7, 1);
+    digitalWrite(8, 1);
+    digitalWrite(9, 1);
     
-    if(getrow == 1)
+    //one line col on
+    digitalWrite(count_col, 0); //첫번째 줄 값만 받아옴
+
+    //get one pin 2
+    getrow = digitalRead(2);
+
+    if(getrow == 1) //h일때
     {
-      Serial.println("HIGH");
+      //printf only one
+      
+      if(flag[count_col - 6] == 0)
+      {
+          Serial.println("HIGH" + String(count_col - 6));
+          flag[count_col - 6] = 1;
+      }
     }
     else
     {
-      Serial.println("LOW");
+      if(flag[count_col - 6] == 1)
+      {
+          Serial.println("LOW" + String(count_col - 6));
+          flag[count_col - 6] = 0;
+      }
     }
     
-  
+       count_col++;
+      if(count_col == 10)
+      {
+        count_col = 6;
+      }
   }
+
+
       
   
 }
