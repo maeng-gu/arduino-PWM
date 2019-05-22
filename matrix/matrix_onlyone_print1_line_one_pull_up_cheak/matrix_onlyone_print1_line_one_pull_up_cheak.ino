@@ -27,9 +27,9 @@ void loop() {
   {
     per = cur;
 
-    digitalWrite(6, 0);
+    digitalWrite(6, 0); //하나의 col 켜두고
 
-    getrow = digitalRead(2);
+    getrow = digitalRead(2); //row에 값을 계속 받아옴.
     
     if(getrow == 1)
     {
