@@ -58,6 +58,12 @@ void loop() {
           flag[count_col - 6] = 0;
       }
     }
+
+
+
+
+
+
     
        count_col++;
       if(count_col == 10)
