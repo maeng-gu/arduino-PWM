@@ -1,0 +1,39 @@
+
+#include "pitches.h"
+int speakerPin = 6; // 스피커 연결 핀
+int melody[] = { // 학교종 멜로디. 0은 쉼표
+NOTE_G4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_G4, NOTE_G4, NOTE_E4, 0,
+NOTE_G4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_D4, 0,
+NOTE_G4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_G4, NOTE_G4, NOTE_E4, 0,
+NOTE_G4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_C4, 0
+};
+int noteDuration = 4; // 모든 음표는 4분 음표로 통일
+int thisNote = 0;
+int thisNote_count = (sizeof(melody) / sizeof(int));
+
+int prv_time=0;
+int cur_time=0;
+int interval=325;
+
+void setup() 
+{
+  Serial.begin(9600);
+}
+void loop() 
+{
+    if (thisNote_count == thisNote)
+      thisNote=0;
+      
+    cur_time = millis();  
+ 
+    // 음표와 음표 사이의 시간 간격 설정
+    // 음표 길이에 30%를 더해서 재생
+    if (cur_time - prv_time > interval)
+    {
+        prv_time = cur_time;
+        //noTone(speakerPin); // 재생 중지
+        tone(speakerPin, melody[thisNote], 1000/4); // 멜로디 재생 //(1000/4) 음표 길이를 시간으로 변환
+        thisNote++;
+    }
+    
+}
