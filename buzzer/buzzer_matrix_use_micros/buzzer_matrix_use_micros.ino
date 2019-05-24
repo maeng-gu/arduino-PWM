@@ -1,3 +1,5 @@
+//pull down 회로
+
 void setup() {
   //matrix
   pinMode(2, INPUT);
