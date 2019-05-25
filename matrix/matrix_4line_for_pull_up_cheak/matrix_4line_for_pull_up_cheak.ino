@@ -46,7 +46,7 @@ void loop() {
           //get one pin 2
         getrow[i - 2] = digitalRead(i);    //get one pin 2
 
-        if(getrow[i-2] == 1) //h일때
+        if(getrow[i-2] == 1) //if h
         {
           //printf only one
           
