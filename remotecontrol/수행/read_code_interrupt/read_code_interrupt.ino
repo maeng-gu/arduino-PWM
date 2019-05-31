@@ -2,7 +2,7 @@
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  attachInterrupt(1, remocon_ISR, FALLING);
+  attachInterrupt(0, remocon_ISR, FALLING);
 }
 
 int count = 0;

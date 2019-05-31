@@ -2,7 +2,7 @@
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  attachInterrupt(1, remocon_ISR, FALLING);
+  attachInterrupt(0, remocon_ISR, FALLING);
 }
 
 void loop() {
@@ -32,8 +32,6 @@ void remocon_ISR()
     count = 0;
     for(int j = 18; j < 26 ; j++)
     {
-//      Serial.print (String(j) + ":");
-//      Serial.println (offset_value[j]);
         if(offset_value[j] > 1000 && offset_value[j] < 1500)
         {
           Serial.print ("0");
