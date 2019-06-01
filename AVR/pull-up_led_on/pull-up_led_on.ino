@@ -15,7 +15,8 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  
+  //PIND => input -> 실시간으로 업데이트 된다. -> 8비트
   if(PIND & 0x04)
   {
       PORTB = 0x20;
