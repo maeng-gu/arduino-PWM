@@ -8,11 +8,11 @@ int count, duty;
 void loop() {
   unsigned long currentMicros = micros(); 
    
-  if(currentMicros = p_micros > 100)
+  if(currentMicros = previousMillis > 100)
   {
     previousMillis = currentMicros;
     
-    count++
+    count++;
     if(count == 100)
     {
       digitalWrite(13, 1);
