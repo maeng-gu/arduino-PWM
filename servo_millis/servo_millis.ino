@@ -1,6 +1,7 @@
 void setup() {
 
   pinMode(13, OUTPUT);
+  pinMode(3, OUTPUT);
   
 }
 unsigned long previousMicors = 0; 
