@@ -6,6 +6,7 @@ void setup() {
 unsigned long previousMicors = 0; 
 unsigned long previousMillis = 0; 
 int count = 0;
+int flag = 0;
 
 void loop() {
   unsigned long currentMicros = micros(); 
@@ -15,10 +16,20 @@ void loop() {
   {
       previousMillis = currentMillis;
       digitalWrite(13, 1);
+      flag = 1;
+      previousMicors = currentMicros = micros();
+      
   }
-  if(currentMicros - currentMicros > 2500)
-   {
-      previousMicors = currentMillis;
-      digitalWrite(13, 0);
+
+  if(flag == 1)
+  {
+     if(currentMicros - previousMicors > 1000)
+     {
+        previousMicors = currentMillis;
+        digitalWrite(13, 0);
+        flag = 0;
+     }
   }
+  
+
 }
