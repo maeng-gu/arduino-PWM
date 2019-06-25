@@ -16,6 +16,7 @@ int duty_servo = 0;
 
 void loop() {
   unsigned long currentMicros = micros(); 
+  unsigned long currentMicros_1 = micros(); 
   unsigned long currentMillis = millis(); 
 
    
@@ -49,9 +50,9 @@ void loop() {
   }
   /////--------------------
 
-  if(currentMicros - previousMicors1)
+  if(currentMicros_1 - previousMicors1)
   {
-    previousMicors1 = currentMicros;
+    previousMicors1 = currentMicros_1;
     count1++;
     if(count1 == 625)
     {
@@ -71,6 +72,24 @@ void loop() {
       if(duty_servo == 72)
       {
         duty_servo = 22;
+      }
+    }
+    ///////////////
+    if(c_mill - p_mill > 10)
+    {
+      flag = 1;
+      p_mill = c_mill;
+      D.W H
+      p_micros = c_micros = micros();
+    }
+
+    if(flag == 1)
+    {
+      if(c_micors - p_micros2 > 100)
+      {
+        p_micors2 = c_micros;
+        DW L
+        flag = 0;
       }
     }
   }
