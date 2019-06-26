@@ -7,7 +7,7 @@ unsigned long previousMicors = 0;
 unsigned long previousMillis = 0; 
 int count = 0;
 int flag = 0;
-int duty = 0;
+int duty = 1000;
 
 void loop() {
   unsigned long currentMicros = micros(); 
@@ -32,12 +32,14 @@ void loop() {
      }
   }
 
-  if(currentMillis - previousMillis > 20)
+  if(currentMillis - previousMillis > 10)
   {
-    duty++;
-    if(duty == 1000)
+    previousMillis = currentMillis;
+
+    duty = duty + 100;
+    if(duty == 9000)
     {
-      duty = 0;
+      duty = 1000;
     }
   }
   
