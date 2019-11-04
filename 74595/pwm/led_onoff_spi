@@ -1,0 +1,37 @@
+#define CS 10
+#define MOSI 11 //data
+#define CLK 13 // clock
+#define LATCH 4
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(CS, OUTPUT); 
+  pinMode(MOSI, OUTPUT);
+  pinMode(CLK, OUTPUT);
+  pinMode(LATCH, OUTPUT);
+
+  SPCR = 0x53; //SPI enable, MSB first, Master, 128분주
+}
+
+void loop() {
+  //shiftOut(DATA, CLOCK, MSBFIRST, 0x01);
+  SPDR = 0x01;
+  while(!(SPSR & 0x80));
+  latch();
+  delay(1000);
+  //---------------------------
+  //shiftOut(DATA, CLOCK, MSBFIRST, 0x00);
+  SPDR = 0x00;
+  while(!(SPSR & 0x80));
+  latch();
+  delay(1000);
+  //---------------------------
+
+}
+
+void latch()
+{
+  digitalWrite(LATCH, HIGH);
+  digitalWrite(LATCH, LOW);
+}
