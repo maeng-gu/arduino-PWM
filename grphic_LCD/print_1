@@ -1,0 +1,98 @@
+#define RS 2
+#define RW 3
+#define E 4
+
+#define DB0 5
+#define DB1 6
+#define DB2 7
+#define DB3 8
+#define DB4 9
+#define DB5 10
+#define DB6 11
+#define DB7 12
+
+char lcd_data;
+
+int i, j;
+
+void setup() {
+  Serial.begin(9600);
+  
+  for(i = 2 ; i < 13 ; i++)
+  {
+    pinMode(i, OUTPUT);
+  }
+
+  charLCD_INST_8bit(0x30);
+  charLCD_INST_8bit(0x30);
+  charLCD_INST_8bit(0x30);
+
+
+  charLCD_INST_8bit(0x38);
+  charLCD_INST_8bit(0x06);
+  charLCD_INST_8bit(0x0C);
+  charLCD_INST_8bit(0x80);
+  charLCD_INST_8bit(0x01);
+
+  delay(20);
+
+}
+
+void loop() {  
+  charLCD_INST_8bit(0x36); //Extended mode, Graphic digplay on
+  charLCD_INST_8bit(0x81);  //y
+  charLCD_INST_8bit(0x81); //x
+
+  charLCD_INST_8bit(0x30); //basic mode
+  charLCD_DATA_8bit(0xff);
+  charLCD_DATA_8bit(0xff);
+  
+  delay(1000);
+}
+
+void charLCD_INST_8bit(char data)
+{
+   //8bit mode 0x30
+  digitalWrite(RS, LOW);
+
+  for(i = 0 ; i<8 ; i++)
+  {
+    if(data & (0x80 >> i))
+    {
+      digitalWrite(5+(7-i), HIGH);
+    }
+    else
+    {
+      digitalWrite(5+(7-i), LOW);
+    }
+  }
+
+  digitalWrite(E, HIGH);
+  digitalWrite(E, LOW);
+
+  digitalWrite(RS, HIGH);
+
+  delayMicroseconds(50);
+}
+
+
+void charLCD_DATA_8bit(char data)
+{
+   //8bit mode 0x30
+  for(i = 0 ; i<8 ; i++)
+  {
+    if(data & (0x80 >> i))
+    {
+      digitalWrite(5+(7-i), HIGH);
+    }
+    else
+    {
+      digitalWrite(5+(7-i), LOW);
+    }
+  }
+
+  digitalWrite(E, HIGH);
+  digitalWrite(E, LOW);
+
+  delayMicroseconds(50);
+}
