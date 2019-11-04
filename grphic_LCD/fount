@@ -1,0 +1,150 @@
+#define RS 2
+#define RW 3
+#define E 4
+
+#define CS RS
+#define SCLK E
+#define SID RW
+
+int i, j = 0;
+char lcd_data;
+
+void charLCD_INST_8bit();
+void charLCD_DATA_8bit();
+
+void charLCD_INST_8bit(char data)
+{
+    digitalWrite(RS, 0);
+
+    for(i=0 ; i < 8 ; i++) {
+        if(data & (0x80 >> i )) {
+            digitalWrite(5+(7-i), 1);
+        }
+        else {
+            digitalWrite(5+(7-i), 0);
+        }
+    }
+    digitalWrite(E, 1);
+    digitalWrite(E, 0);
+
+    digitalWrite(RS, 1);
+    
+    delayMicroseconds(50);
+}
+
+void charLCD_DATA_8bit(char data)
+{
+    for(i=0 ; i < 8 ; i++) {
+        if(data & (0x80 >> i )) {
+            digitalWrite(5+(7-i), 1);
+        }
+        else {
+            digitalWrite(5+(7-i), 0);
+        }
+    }
+    digitalWrite(E, 1);
+    digitalWrite(E, 0);
+    
+    delayMicroseconds(50);
+}
+
+void LCD_clear()
+{
+    int i, j;
+    for(j=0;j<8;j++){
+        for(i=0;i<64;i++){
+            charLCD_INST_8bit(0x36);        // extended mode, graphic display on
+            charLCD_INST_8bit(0x80+(i%32));        // y
+            charLCD_INST_8bit(0x80+(i/32)*8+j);        // x
+
+            charLCD_INST_8bit(0x30);        // basic mode
+            charLCD_DATA_8bit(0x00);
+            charLCD_DATA_8bit(0x00);
+        }
+    }
+}
+
+void LCD_clear_serial()
+{
+    int i, j;
+    for(j=0;j<8;j++){
+        for(i=0;i<64;i++){
+            graphicLCD_serial_INST(0x36);        // extended mode, graphic display on
+            graphicLCD_serial_INST(0x80+(i%32));        // y
+            graphicLCD_serial_INST(0x80+(i/32)*8+j);        // x
+
+            charLCD_INST_8bit(0x30);        // basic mode
+            graphicLCD_serial_DATA(0x00);
+            graphicLCD_serial_DATA(0x00);
+        }
+    }
+}
+
+void graphicLCD_serial_INST(char inst)
+{
+    digitalWrite(CS, 1);
+
+    shiftOut(SID, SCLK, MSBFIRST, 0xf8);
+    shiftOut(SID, SCLK, MSBFIRST, inst & 0xf0);
+    shiftOut(SID, SCLK, MSBFIRST, (inst & 0x0f) << 4);
+
+    digitalWrite(CS, 0);
+}
+
+void graphicLCD_serial_DATA(char data)
+{
+    digitalWrite(CS, 1);
+
+    shiftOut(SID, SCLK, MSBFIRST, 0xfa);
+    shiftOut(SID, SCLK, MSBFIRST, data & 0xf0);
+    shiftOut(SID, SCLK, MSBFIRST, (data & 0x0f) << 4);
+
+    digitalWrite(CS, 0);
+}
+
+void graphicLCD_data_serial(int x, int y, unsigned short data)
+{
+    graphicLCD_serial_INST(0x36);        // extended mode, graphic display on
+    graphicLCD_serial_INST(0x80+(y%32));        // x
+    graphicLCD_serial_INST(0x80+(y/32*8+x));        // y
+
+    graphicLCD_serial_INST(0x30);        // basic mode
+    graphicLCD_serial_DATA((data & 0xff00) >> 8);
+    graphicLCD_serial_DATA(data & 0xff);
+}
+
+void setup()
+{
+    
+    for(i = 2 ; i < 13 ; i++){
+        pinMode(i, OUTPUT);
+    }
+
+    graphicLCD_serial_INST(0x30);
+    graphicLCD_serial_INST(0x30);
+    graphicLCD_serial_INST(0x30);
+
+    graphicLCD_serial_INST(0x38);
+    graphicLCD_serial_INST(0x06);
+    graphicLCD_serial_INST(0x0c);
+    graphicLCD_serial_INST(0x80);
+    graphicLCD_serial_INST(0x01);
+    delay(2);
+}
+
+void loop()
+{
+    int point_x, point_y;
+
+    //graphicLCD_serial_DATA(0x31);
+
+    LCD_clear_serial();
+    
+    for(point_x = 0 ; point_x < 8; point_x++) {
+        for(point_y = 0 ; point_y < 64 ; point_y++) {
+            graphicLCD_data_serial(point_x, point_y, 0xaaaa);
+            delay(10);
+        }
+    }
+    delay(1000);
+}
