@@ -1,0 +1,117 @@
+#define RS 2
+#define RW 3
+#define E 4
+
+#define CS RS
+#define SCLK E
+#define SID RW
+
+
+char lcd_data;
+
+int i, j;
+
+void setup() {
+  Serial.begin(9600);
+  
+  for(i = 2 ; i < 13 ; i++)
+  {
+    pinMode(i, OUTPUT);
+  }
+
+
+
+  graphicLCD_serial_INST(0x30);
+  graphicLCD_serial_INST(0x30);
+  graphicLCD_serial_INST(0x30);
+
+
+  graphicLCD_serial_INST(0x38);
+  graphicLCD_serial_INST(0x06);
+  graphicLCD_serial_INST(0x0C);
+  graphicLCD_serial_INST(0x80);
+  graphicLCD_serial_INST(0x01);
+
+  delay(20);
+
+}
+
+void loop() {  
+
+  graphicLCD_serial_DATA(0x31);
+  delay(1000);
+//  charLCD_INST_8bit(0x36); //Extended mode, Graphic digplay on
+//  charLCD_INST_8bit(0x81);  //y
+//  charLCD_INST_8bit(0x81); //x
+//
+//  charLCD_INST_8bit(0x30); //basic mode
+//  charLCD_DATA_8bit(0xff);
+//  charLCD_DATA_8bit(0xff);
+  
+  //delay(1000);
+}
+
+void graphicLCD_serial_INST(char inst)
+{
+  digitalWrite(CS, HIGH);
+  shiftOut(SID, SCLK, MSBFIRST, 0xF8);
+  shiftOut(SID, SCLK, MSBFIRST, inst & 0xf0);
+  shiftOut(SID, SCLK, MSBFIRST, (inst & 0x0f) <<4);
+  digitalWrite(CS, LOW);
+}
+
+void graphicLCD_serial_DATA(char inst)
+{
+  digitalWrite(CS, HIGH);
+  shiftOut(SID, SCLK, MSBFIRST, 0xFA);
+  shiftOut(SID, SCLK, MSBFIRST, inst & 0xf0);
+  shiftOut(SID, SCLK, MSBFIRST, (inst & 0x0f) <<4);
+  digitalWrite(CS, LOW);
+}
+
+void charLCD_INST_8bit(char data)
+{
+   //8bit mode 0x30
+  digitalWrite(RS, LOW);
+
+  for(i = 0 ; i<8 ; i++)
+  {
+    if(data & (0x80 >> i))
+    {
+      digitalWrite(5+(7-i), HIGH);
+    }
+    else
+    {
+      digitalWrite(5+(7-i), LOW);
+    }
+  }
+
+  digitalWrite(E, HIGH);
+  digitalWrite(E, LOW);
+
+  digitalWrite(RS, HIGH);
+
+  delayMicroseconds(50);
+}
+
+
+void charLCD_DATA_8bit(char data)
+{
+   //8bit mode 0x30
+  for(i = 0 ; i<8 ; i++)
+  {
+    if(data & (0x80 >> i))
+    {
+      digitalWrite(5+(7-i), HIGH);
+    }
+    else
+    {
+      digitalWrite(5+(7-i), LOW);
+    }
+  }
+
+  digitalWrite(E, HIGH);
+  digitalWrite(E, LOW);
+
+  delayMicroseconds(50);
+}
